@@ -33,6 +33,14 @@ const CONDITION_TYPES = {
     EVERY: "every",
 }
 
+/**
+ * In Hydra, there are different generators, called sources in the docs:
+ * https://github.com/ojack/hydra/blob/master/docs/funcs.md#sources
+ */
+const GENERATOR_TYPES = {
+    SHAPE: "shape",
+}
+
 class Handler {
     constructor(bind_sample, do_somthing) {
         this.bind_sample = bind_sample;
@@ -100,11 +108,78 @@ class Handler {
     }
 }
 
+
+/**
+ * Shape constructor in Hydra:
+ *  shape( sides, radius, smoothing)
+ * 
+ * sides default:        3
+ * radius default:     0.3
+ * smoothing default: 0.01
+ */
+class Shape {
+    constructor(sides = 3, radius = 0.3, smoothing = 0.01) {
+        this._sides = sides;
+        this._radius = radius;
+        this._smoothing = smoothing;
+
+        // -1 means "off"
+        this._invert = -1;
+
+        this._exec();
+    }
+
+    sides(sides) {
+        this._sides = sides;
+
+        // update everytime (may be only in the chain)
+        this._exec();
+
+        // allows for chaining
+        return this;
+    }
+
+    radius(radius) {
+        this._radius = radius;
+
+        // update everytime (may be only in the chain)
+        this._exec();
+
+        // allows for chaining
+        return this;
+    }
+
+    smoothing(smoothing) {
+        this._smoothing = smoothing;
+
+        // update everytime (may be only in the chain)
+        this._exec();
+
+        // allows for chaining
+        return this;
+    }
+
+    _exec() {
+        shape(this._sides, this._radius, this._smoothing)
+            .invert(() => this._invert)
+            .out();
+    }
+
+    invert() {
+        this._invert *= -1;
+        return this
+    }
+}
+
+
 // HydraFriend is a registry for handlers, keeping track of relevant state,
 // visualizers (like osc) and listening for emitted events from SuperCollider
 class HydraFriend {
     constructor() {
+        // no handlers to start
         this.handlers = [];
+
+        // listen for updates from SuperCollider
         msg.on("/play2", (args) => {
             const tidal = parseTidal(args);
             setTimeout(() => {
@@ -125,4 +200,5 @@ module.exports = {
     initialize,
     HydraFriend,
     Handler,
+    Shape,
 }
