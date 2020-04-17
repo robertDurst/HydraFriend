@@ -14,6 +14,9 @@ class Shape {
         this._radius = radius;
         this._smoothing = smoothing;
 
+        // defaults to white
+        this._rgb = { "r": 1, "g": 1, "b": 1 };
+
         // -1 means "off"
         this._invert = -1;
 
@@ -57,7 +60,32 @@ class Shape {
         shape(this._sides, this._radius, this._smoothing)
             .rotate(() => this._rotate)
             .invert(() => this._invert)
+            .color(() => this._rgb["r"], () => this._rgb["g"], () => this._rgb["b"])
             .out();
+    }
+
+    red(n) {
+        // allow user to input "normal" 0 - 255 range
+        this._rgb["r"] = (n % 256) / 255.0
+
+        // for chaining
+        return this;
+    }
+
+    green(n) {
+        // allow user to input "normal" 0 - 255 range
+        this._rgb["g"] = (n % 256) / 255.0
+
+        // for chaining
+        return this;
+    }
+
+    blue(n) {
+        // allow user to input "normal" 0 - 255 range
+        this._rgb["b"] = (n % 256) / 255.0
+
+        // for chaining
+        return this;
     }
 
     invert() {

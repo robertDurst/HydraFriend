@@ -1,6 +1,6 @@
 # HydraFriend
 
-Your friendly [hydra](https://github.com/ojack/hyra) library. A wrapper around hydra to allow for quicker, enhanded visual coding by way of stateful handlers and generators.
+Your friendly [hydra](https://github.com/ojack/hydra) library. A wrapper around hydra to allow for quicker, enhanded visual coding by way of stateful handlers and generators.
 
 ## Example
 

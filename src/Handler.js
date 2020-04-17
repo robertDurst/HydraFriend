@@ -14,6 +14,7 @@
  * Currently supported conditions:
  *      * every: execute every x times
  *      * cycle: continously increment, decrement iterations through a cycle
+ *      * randomizer: generate random numbers between a given max and min
  */
 const CONDITION_TYPES = {
     EVERY: "every",
@@ -23,6 +24,7 @@ const CONDITION_TYPES = {
 class Handler {
     constructor(bind_sample, do_somthing) {
         this.bind_sample = bind_sample;
+
         // conditions that can be placed on when method should be executed
         this.conditions = {}
         // method invoked whenever sample played and all conditions met
@@ -38,6 +40,10 @@ class Handler {
         // current cycle is public via a getter so that it can be used as part
         // of the do_something
         this._current_cycle = 0;
+        // allows for some random value to exist which can be used to create
+        // some interesting effects
+        this._random_value = 0;
+
         this._update_handler();
     }
 
@@ -148,6 +154,21 @@ class Handler {
 
     current_cycle() {
         return this._current_cycle;
+    }
+
+    randomizer(min, max) {
+        // simply updates a random value between some inclusive max and min
+        const condition = () => {
+            // https://www.w3schools.com/js/js_random.asp
+            this._random_value = Math.floor(Math.random() * (max - min + 1)) + min;
+            return true;
+        }
+
+        this.conditions[CONDITION_TYPES.EVERY] = condition;
+    }
+
+    current_random_value() {
+        return this._random_value;
     }
 
     // method called externally to execute underlying method
