@@ -1,0 +1,23 @@
+{
+  "name": "hydrafriend",
+  "version": "0.0.1",
+  "description": "create stateful handlers for responding to samples in hydra",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robertDurst/HydraFriend.git"
+  },
+  "keywords": [
+    "hydra",
+    "livecoding"
+  ],
+  "author": "Robert Durst",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/robertDurst/HydraFriend/issues"
+  },
+  "homepage": "https://github.com/robertDurst/HydraFriend#readme"
+}
