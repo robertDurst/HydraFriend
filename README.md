@@ -4,7 +4,7 @@ Your friendly [hydra](https://github.com/ojack/hydra) library. A wrapper around 
 
 ## Example
 
-Let's create a simple setup that will invert a triangle everytime a `bd` sample is heard. This example assumes you have a [SuperCollider](https://supercollider.github.io/) session that relays messages to some given port (we are using port 3333). For an example file to use at startup, [see here](https://github.com/robertDurst/algorave_dump/blob/master/tidal-forward.scd).
+Let's create a somewhat nontrivial setup that will do some funky things with default SuperDirt samples. This example assumes you have a [SuperCollider](https://supercollider.github.io/) session that relays messages to some given port (we are using port 3333). For an example file to use at startup, [see here](https://github.com/robertDurst/algorave_dump/blob/master/tidal-forward.scd).
 
 ```js
 // import library (now on npm yeah!)
@@ -52,11 +52,6 @@ const handle_reverbkick = new Handler("reverbkick");
 handle_reverbkick.cycle([5, 0], 1);
 handle_reverbkick.method(() => octagon.scale(handle_reverbkick.current_cycle()));
 
-// rotate the inner triangle
-const handle_dsynth = new Handler("dsynth");
-handle_dsynth.cycle([5, 0], 1);
-handle_dsynth.method(() => triangle.rotate(handle_reverbkick.current_cycle()));
-
 // register all our handlers
 const hf = new HydraFriend();
 hf.register(handle_bd);
@@ -64,5 +59,4 @@ hf.register(handle_arpy)
 hf.register(handle_cp);
 hf.register(handle_crow);
 hf.register(handle_reverbkick);
-hf.register(handle_dsynth);
 ```
