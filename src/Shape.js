@@ -21,12 +21,14 @@
  * sides default:        3
  * radius default:     0.3
  * smoothing default: 0.01
+ * buffer default 0
  */
 class Shape {
-    constructor(sides = 3, radius = 0.3, smoothing = 0.01) {
+    constructor(sides = 3, radius = 0.3, smoothing = 0.01, buffer = 0) {
         this._sides = sides;
         this._radius = radius;
         this._smoothing = smoothing;
+        this._buffer = buffer;
 
         // defaults to white
         this._rgb = { "r": 1, "g": 1, "b": 1 };
@@ -48,7 +50,7 @@ class Shape {
         // 0 means "straight up" via 0 degree rotation
         this._rotate = 0;
 
-        // since we may want to put shapes in shapes, we need a way to access
+        // since we may want to put sources in sources, we need a way to access
         // the underlying generator
         this._raw;
 
@@ -79,7 +81,28 @@ class Shape {
         return this;
     }
 
+    buffer(buffer) {
+        this._buffer = buffer;
+
+        // allows for chaining
+        return this;
+    }
+
+    _buf() {
+        switch (this._buffer) {
+            case 0:
+                return o0;
+            case 1:
+                return o1;
+            case 2:
+                return o2;
+            default:
+                return o3;
+        }
+    }
+
     _exec() {
+        console.log(this)
         const s = shape(
             () => this._sides,
             () => this._radius,
@@ -101,7 +124,7 @@ class Shape {
             s.mult(this._mult.texture);
         }
 
-        s.out();
+        s.out(this._buf());
 
         this._raw = s;
     }
@@ -153,9 +176,13 @@ class Shape {
     // both mutiply methods override, which makes sense because I don't think
     // it is possible to have two of these
     multiply_shape(shape, amount = 1.0) {
+        console.log(this)
         this._mult = { texture: shape._get_raw() };
 
+        console.log(this)
+        console.log("ENTER EXEC")
         this._exec();
+        console.log(this)
 
         // for chaining
         return this;
