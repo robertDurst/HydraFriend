@@ -48,7 +48,7 @@ An oscillator is a continuous oscillation.
 #### Oscillator Methods
 
 | Name | Parameters | Description |
-|---------------------------------|
+|-------|------------|--------------|
 | frequency | float | frequency of oscillation |
 | sync | float | honestly, idk |
 | offset | float | the offset of the oscillations |
