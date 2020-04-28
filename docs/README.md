@@ -25,7 +25,7 @@ A shape is a multi-sided figure.
 #### Shape Methods
 
 | Name | Parameters | Description |
-|---------------------------------|
+|-------|-----------|---------------|
 | sides | int | set number of sides |
 | radius | float | set radius size | 
 | smoothing | float | set smoothing effect |
@@ -65,7 +65,7 @@ A handler binds a method to a sample.
 ### Methods
 
 | Name | Parameters | Description |
-|---------------------------------|
+|-------|-----------|---------------|
 | sample | string | binds handler to the given sample name |
 | method | functtion | sets function |
 | every | int | adds a condition on the function such that it only executes every `x` times |
