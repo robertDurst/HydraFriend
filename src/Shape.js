@@ -188,7 +188,7 @@ class Shape {
         return this;
     }
 
-    multiply_color(red, green) {
+    multiply_color(red, green, blue) {
         this._mult = { texture: ((red % 256) / 255.0, (green % 256) / 255.0, (blue % 256) / 255.0) };
 
         this._exec();
