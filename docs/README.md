@@ -4,11 +4,11 @@ HydraFriend is an wrapper around [hydra](https://github.com/ojack/hydra) allowin
 
 - [Generators](#Generators)
   * [Shape](#Shape)
-    + [Methods](#Methods)
+    + [Methods](#Shape-Methods)
   * [Oscillator](#Oscillator)
-    + [Methods](#Methods)
+    + [Methods](#Oscillator-Methods)
 - [Handlers](#Handlers)
-    * [Methods](#Methods)
+    * [Methods](#Handler-Methods)
 - [HydraFriend](#HydraFriend)
 
 
@@ -22,7 +22,7 @@ A generator is a stateful object wrapped around a [source](https://github.com/oj
 
 A shape is a multi-sided figure.
 
-#### Shape Methods
+#### Shape-Methods
 
 | Name | Parameters | Description |
 |-------|-----------|---------------|
@@ -45,7 +45,7 @@ A shape is a multi-sided figure.
 
 An oscillator is a continuous oscillation.
 
-#### Oscillator Methods
+#### Oscillator-Methods
 
 | Name | Parameters | Description |
 |-------|------------|--------------|
@@ -62,7 +62,7 @@ An oscillator is a continuous oscillation.
 
 A handler binds a method to a sample.
 
-### Methods
+### Handler-Methods
 
 | Name | Parameters | Description |
 |-------|-----------|---------------|
