@@ -2,6 +2,8 @@
 
 Your friendly [hydra](https://github.com/ojack/hydra) library. A wrapper around hydra to allow for quicker, enhanded visual coding by way of stateful handlers and generators.
 
+[See it in action!](https://www.twitch.tv/videos/599123738)
+
 ## Are There Docs?
 
 Yes, but they are embarrasingly shallow and tbh not helpful - I will work on these once the library itself is more complete (*I promise 🙏*).
