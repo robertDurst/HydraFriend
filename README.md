@@ -1,5 +1,7 @@
 # HydraFriend
 
+![](https://img.shields.io/npm/dw/hydrafriend?style=plastic)
+
 Your friendly [hydra](https://github.com/ojack/hydra) library. A wrapper around hydra to allow for quicker, enhanded visual coding by way of stateful handlers and generators.
 
 [See it in action!](https://www.twitch.tv/videos/599123738)
