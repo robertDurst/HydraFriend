@@ -46,9 +46,7 @@ const hf = new HydraFriend();
 hf.register(handle_bd);
 ```
 
-**music.tidal
+**music.tidal**
 ```
 d1 $ s "bd sn"
 ```
-
-### 
