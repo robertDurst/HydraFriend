@@ -2,7 +2,7 @@
 
 ![](https://img.shields.io/npm/dw/hydrafriend?style=plastic)
 
-<div style="text-align:center"><img src="https://media.giphy.com/media/PhNGV8am8JPqS1Tu46/giphy.gif" /></div>
+![gif demo](https://media.giphy.com/media/PhNGV8am8JPqS1Tu46/giphy.gif)
 
 Your friendly [hydra](https://github.com/ojack/hydra) library. A wrapper around hydra to allow for quicker, enhanded visual coding by way of stateful handlers and generators.
 
