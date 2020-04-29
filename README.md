@@ -2,15 +2,13 @@
 
 ![](https://img.shields.io/npm/dw/hydrafriend?style=plastic)
 
-<div style="text-align:center"><img src="https://media.giphy.com/media/PhNGV8am8JPqS1Tu46/giphy.gif" /></div>
-
 Your friendly [hydra](https://github.com/ojack/hydra) library. A wrapper around hydra to allow for quicker, enhanded visual coding by way of stateful handlers and generators.
 
 [See it in action on Twitch!](https://www.twitch.tv/videos/599123738)
 
 ## Are There Docs?
 
-Yes, but they are embarrasingly shallow and tbh not helpful - I will work on these once the library itself is more complete (*I promise 🙏*).
+Yes, but they are a work in progress - I will work on these once the library itself is more complete (*I promise 🙏*).
 
 ## How Can I Use This?
 
