@@ -24,11 +24,10 @@
  * buffer default 0
  */
 class Shape {
-    constructor(sides = 3, radius = 0.3, smoothing = 0.01, buffer = 0) {
+    constructor(sides = 3, radius = 0.3, smoothing = 0.01) {
         this._sides = sides;
         this._radius = radius;
         this._smoothing = smoothing;
-        this._buffer = buffer;
 
         // defaults to white
         this._rgb = { "r": 1, "g": 1, "b": 1 };
@@ -88,19 +87,6 @@ class Shape {
         return this;
     }
 
-    _buf() {
-        switch (this._buffer) {
-            case 0:
-                return o0;
-            case 1:
-                return o1;
-            case 2:
-                return o2;
-            default:
-                return o3;
-        }
-    }
-
     _exec() {
         console.log(this)
         const s = shape(
@@ -124,7 +110,7 @@ class Shape {
             s.mult(this._mult.texture);
         }
 
-        s.out(this._buf());
+        s.out();
 
         this._raw = s;
     }

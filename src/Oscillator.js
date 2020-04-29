@@ -97,22 +97,9 @@ class Oscillator {
             o.mult(this._mult.texture);
         }
 
-        o.out(this._buf());
+        o.out();
 
         this._raw = o;
-    }
-
-    _buf() {
-        switch (this._buffer) {
-            case 0:
-                return o0;
-            case 1:
-                return o1;
-            case 2:
-                return o2;
-            default:
-                return o3;
-        }
     }
 
     _get_raw() {
