@@ -2,11 +2,8 @@
 
 ![](https://img.shields.io/npm/dw/hydrafriend?style=plastic)
 
-<<<<<<< HEAD
 ![gif demo](https://media.giphy.com/media/PhNGV8am8JPqS1Tu46/giphy.gif)
 
-=======
->>>>>>> 2ee8a94fa4ea44bc23ab18e7205f850fcad2dbe6
 Your friendly [hydra](https://github.com/ojack/hydra) library. A wrapper around hydra to allow for quicker, enhanded visual coding by way of stateful handlers and generators.
 
 [See it in action on Twitch!](https://www.twitch.tv/videos/599123738)
