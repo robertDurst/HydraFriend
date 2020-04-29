@@ -41,7 +41,7 @@ class Shape {
         }
 
         // -1 means "off"
-        this._invert = -1;
+        this._invert = 0;
 
         // 1 means "normal"
         this._scale = 1;
@@ -52,6 +52,9 @@ class Shape {
         // since we may want to put sources in sources, we need a way to access
         // the underlying generator
         this._raw;
+
+        // defaults to black
+        this._background = { "r": 0, "g": 0, "b": 0 };
 
         this._exec();
 
@@ -87,6 +90,15 @@ class Shape {
         return this;
     }
 
+    background(r, g, b) {
+        this._background["r"] = (r % 256) / 255.0;
+        this._background["g"] = (g % 256) / 255.0;
+        this._background["b"] = (b % 256) / 255.0;
+
+        // allows for chaining
+        return this;
+    }
+
     _exec() {
         console.log(this)
         const s = shape(
@@ -110,14 +122,28 @@ class Shape {
             s.mult(this._mult.texture);
         }
 
+        if (this._add) {
+            s.add(this._add.texture);
+        }
+
+        if (this._blend) {
+            s.blend(this._blend.texture);
+        }
+
         s.out();
 
-        this._raw = s;
+        const background = solid(
+            () => this._background["r"],
+            () => this._background["g"],
+            () => this._background["b"]
+        ).add(s).out();
+
+        this._raw = background;
     }
 
     red(n) {
         // allow user to input "normal" 0 - 255 range
-        this._rgb["r"] = (n % 256) / 255.0
+        this._rgb["r"] = (n % 256) / 255.0;
 
         // for chaining
         return this;
@@ -125,7 +151,7 @@ class Shape {
 
     green(n) {
         // allow user to input "normal" 0 - 255 range
-        this._rgb["g"] = (n % 256) / 255.0
+        this._rgb["g"] = (n % 256) / 255.0;
 
         // for chaining
         return this;
@@ -133,14 +159,21 @@ class Shape {
 
     blue(n) {
         // allow user to input "normal" 0 - 255 range
-        this._rgb["b"] = (n % 256) / 255.0
+        this._rgb["b"] = (n % 256) / 255.0;
 
         // for chaining
         return this;
     }
 
     invert() {
-        this._invert *= -1;
+        switch (this._invert) {
+            case -1:
+                this._invert = 1;
+                break;
+            default:
+                this._invert = -1;
+                break;
+        }
 
         // for chaining
         return this
@@ -152,31 +185,28 @@ class Shape {
 
         this._rotate = modded_rotate;
 
-        // this._exec();
-
         // for chaining
         return this;
     }
 
-
-    // both mutiply methods override, which makes sense because I don't think
-    // it is possible to have two of these
-    multiply_shape(shape, amount = 1.0) {
-        console.log(this)
-        this._mult = { texture: shape._get_raw() };
-
-        console.log(this)
-        console.log("ENTER EXEC")
+    mult_generator(generator) {
+        this._mult = { texture: generator._get_raw() };
         this._exec();
-        console.log(this)
 
         // for chaining
         return this;
     }
 
-    multiply_color(red, green, blue) {
-        this._mult = { texture: ((red % 256) / 255.0, (green % 256) / 255.0, (blue % 256) / 255.0) };
+    add_generator(generator) {
+        this._add = { texture: generator._get_raw() };
+        this._exec();
 
+        // for chaining
+        return this;
+    }
+
+    blend_generator(generator) {
+        this._blend = { texture: generator._get_raw() };
         this._exec();
 
         // for chaining

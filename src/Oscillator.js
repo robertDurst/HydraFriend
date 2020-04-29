@@ -4,16 +4,19 @@
  */
 
 class Oscillator {
-    constructor(frequency=60.0, sync=0.1, offset=0.0) {
+    constructor(frequency = 60.0, sync = 0.1, offset = 0.0) {
         this._frequency = frequency;
         this._sync = sync;
         this._offset = offset;
 
-        // defaults to 0
-        this._kaleid = 0;
-
         // defaults to white
         this._rgb = { "r": 1, "g": 1, "b": 1 };
+
+        // 0 means "straight up" via 0 degree rotation
+        this._rotate = 0;
+
+        // 1 means "normal"
+        this._scale = 1;
 
         // since we may want to put sources in sources, we need a way to access
         // the underlying generator
@@ -77,8 +80,38 @@ class Oscillator {
         return this;
     }
 
-    kaleid(kaleid) {
-        this._kaleid = kaleid;
+    scale(scale) {
+        this._scale = scale;
+
+        // for chaining
+        return this;
+    }
+
+    blend_generator(generator) {
+        this._blend = { texture: generator._get_raw() };
+
+        this._exec();
+
+        // for chaining
+        return this;
+    }
+
+    mult_generator(generator) {
+        this._mult = { texture: generator._get_raw() };
+        this._exec();
+
+        // for chaining
+        return this;
+    }
+
+    rotate(rotate) {
+        // hiding this mod 360 is not great, but limits weird over rotations
+        const modded_rotate = rotate % 360;
+
+        this._rotate = modded_rotate;
+
+        // for chaining
+        return this;
     }
 
     _exec() {
@@ -90,11 +123,15 @@ class Oscillator {
                 () => this._rgb["r"],
                 () => this._rgb["g"],
                 () => this._rgb["b"])
-            .kaleid(() => this._kaleid);
-            
+            .rotate(() => this._rotate)
+            .scale(() => this._scale)
 
         if (this._mult) {
             o.mult(this._mult.texture);
+        }
+
+        if (this._blend) {
+            o.blend(this._blend.texture);
         }
 
         o.out();
