@@ -1,6 +1,6 @@
 {
   "name": "hydrafriend",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "create stateful handlers for responding to samples in hydra",
   "main": "index.js",
   "scripts": {
