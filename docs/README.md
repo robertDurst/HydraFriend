@@ -38,13 +38,13 @@ A shape is a multi-sided figure.
 | blue | [0-255] | set b value in rgb |
 | invert | None | inverts the coloring |
 | rotate | [0-365] | sets rotation in degrees |
+| repeat | int, int, int, int | creates a repitition grid for of this shape | 
+| scale | int | scales this shape |
 | kaleid | int | generates the kaleidiscope effect with x sides | 
 | colorama | array of int's | cycles through color distortion effects, by *"shifting HSV values."*- [the docs](https://github.com/ojack/hydra/blob/master/docs/funcs.md#colorama)|   
 | mult_generator | Shape/Oscillator | puts a Shape/Oscillator inside this shape | 
 | add_generator | Shape/Oscillator | adds a Shape/Oscillator inside this shape | 
 | blend_generator | Shape/Oscillator | blends a Shape/Oscillator inside this shape | 
-| repeat | int, int, int, int | creates a repitition grid for of this shape | 
-| scale | int | scales this shape |
 | modulate_noise | int, int | modulates based on [Hydra's noise](https://github.com/ojack/hydra/blob/master/docs/funcs.md#noise) source | 
 | modulate_generator | generator | same as above, but uses a generator as the source| 
 

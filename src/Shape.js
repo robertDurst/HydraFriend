@@ -107,72 +107,8 @@ class Shape {
         return this;
     }
 
-    _exec() {
-        const s = shape(
-            () => this._sides,
-            () => this._radius,
-            () => this._smoothing)
-            .rotate(() => this._rotate)
-            .invert(() => this._invert)
-            .color(
-                () => this._rgb["r"],
-                () => this._rgb["g"],
-                () => this._rgb["b"])
-            .scale(() => this._scale)
-            .repeat(
-                () => this._repeat.x_num,
-                () => this._repeat.y_num,
-                () => this._repeat.x_offset,
-                () => this._repeat.y_offset);
-        if (this._mult) {
-            s.mult(this._mult.texture);
-        }
-
-        if (this._add) {
-            s.add(this._add.texture);
-        }
-
-        if (this._blend) {
-            s.blend(this._blend.texture);
-        }
-
-        if (this._modulate) {
-            s.modulate(this._modulate.texture);
-        }
-
-        if (this._kaleid) {
-            s.kaleid(this._kaleid);
-        }
-
-        if (this._noise_mod) {
-            s.modulate(noise(this._noise_mod.scale, this._noise_mod.offset));
-        }
-
-        if (this._colorama) {
-            s.colorama(this._colorama);
-        }
-
-        s.out();
-
-        const background = solid(
-            () => this._background["r"],
-            () => this._background["g"],
-            () => this._background["b"]
-        ).add(s).out();
-
-        this._raw = s;
-    }
-
     kaleid(k) {
         this._kaleid = k;
-        this._exec();
-
-        // for chaining
-        return this;
-    }
-
-    modulate_noise(scale = 10.0, offset = 0.1) {
-        this._noise_mod = { scale, offset };
         this._exec();
 
         // for chaining
@@ -227,6 +163,25 @@ class Shape {
         return this;
     }
 
+    repeat(x_num = 3.0, y_num = 3.0, x_offset = 0.0, y_offset = 0.0) {
+        this._repeat = {
+            x_num,
+            x_offset,
+            y_num,
+            y_offset,
+        };
+
+        // for chaining
+        return this;
+    }
+
+    scale(scale) {
+        this._scale = scale;
+
+        // for chaining
+        return this;
+    }
+
     mult_generator(generator) {
         this._mult = { texture: generator._get_raw() };
         this._exec();
@@ -259,23 +214,68 @@ class Shape {
         return this;
     }
 
-    repeat(x_num = 3.0, y_num = 3.0, x_offset = 0.0, y_offset = 0.0) {
-        this._repeat = {
-            x_num,
-            x_offset,
-            y_num,
-            y_offset,
-        };
+    modulate_noise(scale = 10.0, offset = 0.1) {
+        this._noise_mod = { scale, offset };
+        this._exec();
 
         // for chaining
         return this;
     }
 
-    scale(scale) {
-        this._scale = scale;
+    _exec() {
+        const s = shape(
+            () => this._sides,
+            () => this._radius,
+            () => this._smoothing)
+            .rotate(() => this._rotate)
+            .invert(() => this._invert)
+            .color(
+                () => this._rgb["r"],
+                () => this._rgb["g"],
+                () => this._rgb["b"])
+            .scale(() => this._scale)
+            .repeat(
+                () => this._repeat.x_num,
+                () => this._repeat.y_num,
+                () => this._repeat.x_offset,
+                () => this._repeat.y_offset);
+        if (this._mult) {
+            s.mult(this._mult.texture);
+        }
 
-        // for chaining
-        return this;
+        if (this._add) {
+            s.add(this._add.texture);
+        }
+
+        if (this._blend) {
+            s.blend(this._blend.texture);
+        }
+
+        if (this._modulate) {
+            s.modulate(this._modulate.texture);
+        }
+
+        if (this._kaleid) {
+            s.kaleid(this._kaleid);
+        }
+
+        if (this._noise_mod) {
+            s.modulate(noise(this._noise_mod.scale, this._noise_mod.offset));
+        }
+
+        if (this._colorama) {
+            s.colorama(this._colorama);
+        }
+
+        s.out();
+
+        const background = solid(
+            () => this._background["r"],
+            () => this._background["g"],
+            () => this._background["b"]
+        ).add(s).out();
+
+        this._raw = s;
     }
 
     _get_raw() {
