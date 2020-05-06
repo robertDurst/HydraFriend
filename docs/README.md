@@ -33,17 +33,20 @@ A shape is a multi-sided figure.
 | sides | int | set number of sides |
 | radius | float | set radius size | 
 | smoothing | float | set smoothing effect |
-| buffer | [0 - 3] | set buffer where this will be displayed |
 | red | [0-255] | set r value in rgb |
 | green | [0-255] | set g value in rgb |
 | blue | [0-255] | set b value in rgb |
 | invert | None | inverts the coloring |
 | rotate | [0-365] | sets rotation in degrees |
+| kaleid | int | generates the kaleidiscope effect with x sides | 
+| colorama | array of int's | cycles through color distortion effects, by *"shifting HSV values."*- [the docs](https://github.com/ojack/hydra/blob/master/docs/funcs.md#colorama)|   
 | mult_generator | Shape/Oscillator | puts a Shape/Oscillator inside this shape | 
 | add_generator | Shape/Oscillator | adds a Shape/Oscillator inside this shape | 
 | blend_generator | Shape/Oscillator | blends a Shape/Oscillator inside this shape | 
 | repeat | int, int, int, int | creates a repitition grid for of this shape | 
 | scale | int | scales this shape |
+| modulate_noise | int, int | modulates based on [Hydra's noise](https://github.com/ojack/hydra/blob/master/docs/funcs.md#noise) source | 
+| modulate_generator | generator | same as above, but uses a generator as the source| 
 
 ### Shape-Examples
 
@@ -84,14 +87,19 @@ An oscillator is a continuous oscillation.
 | frequency | float | frequency of oscillation |
 | sync | float | honestly, idk |
 | offset | float | the offset of the oscillations |
-| buffer | [0 - 3] | set buffer where this will be displayed |
 | red | [0-255] | set r value in rgb |
 | green | [0-255] | set g value in rgb |
 | blue | [0-255] | set b value in rgb |
 | rotate | [0-365] | set angle |
+| invert | None | inverts the coloring |
+| kaleid | int | generates the kaleidiscope effect with x sides | 
 | scale | int | set size |
+| colorama | array of int's | cycles through color distortion effects, by *"shifting HSV values."*- [the docs](https://github.com/ojack/hydra/blob/master/docs/funcs.md#colorama)|   
 | blend_generator | generator | blends with a generator |
 | mult_generator | generator | puts a generator inside it |
+| modulate_noise | int, int | modulates based on [Hydra's noise](https://github.com/ojack/hydra/blob/master/docs/funcs.md#noise) source | 
+| modulate_generator | generator | same as above, but uses a generator as the source| 
+
 
 ### Oscillator-Examples
 
@@ -118,11 +126,23 @@ const osc1 = new Oscillator();
 osc1.rotate(180).scale(3);
 ```
 
+**Colorama**
+```js
+const osc1 = new Oscillator();
+osc1.colorama([0.3, 0.7, 0.9]);
+```
+
 **Blend with a second oscillator:**
 ```js
 const osc1 = new Oscillator();
 const osc2 = new Oscillator();
 osc1.blend_generator(osc2);
+```
+
+**Modulate with noise**
+```js
+const osc1 = new Oscillator();
+osc1.modulate_noise(10, 0.7)
 ```
 
 ## Handlers
@@ -136,10 +156,13 @@ A handler binds a method to a sample.
 | sample | string | binds handler to the given sample name |
 | method | functtion | sets function |
 | every | int | adds a condition on the function such that it only executes every `x` times |
-| cycle | [int, int], int | creates a cycle that increments by the given step every method call | 
+| cycle | [int, int], int, int | creates a cycle that increments by the given step every method call | 
 | current_cycle | None | getter for cycle | 
 | randomizer | int, int | generates a new pseudo-random value every time the method is called | 
 | current_random_value | None | getter for random value | 
+| current_random_value | None | getter for random value | 
+| time_sine | None | `static` returns a method that oscilates over the sine curve with time | 
+
 
 ### Handler-Examples
 
@@ -160,10 +183,10 @@ const handle_bd = new Handler("bd");
 handle_bd.randomizer();
 ```
 
-**Initialize a continuous cycle from 0 --> 5 --> 0, stepped by 1**
+**Initialize a continuous cycle from 2 --> 5 --> 2, stepped by 1 and starting at 2**
 ```js
 const handle_bd = new Handler("bd");
-handle_bd.cycle([5,0], 1);
+handle_bd.cycle([5,2], 1, 2);
 ```
 
 **Utilize cycle to scale a triangle shape generator:**

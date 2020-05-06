@@ -99,8 +99,15 @@ class Shape {
         return this;
     }
 
+    colorama(sequence) {
+        this._colorama = sequence
+        this._exec();
+
+        // for chaining
+        return this;
+    }
+
     _exec() {
-        console.log(this)
         const s = shape(
             () => this._sides,
             () => this._radius,
@@ -117,7 +124,6 @@ class Shape {
                 () => this._repeat.y_num,
                 () => this._repeat.x_offset,
                 () => this._repeat.y_offset);
-
         if (this._mult) {
             s.mult(this._mult.texture);
         }
@@ -130,6 +136,22 @@ class Shape {
             s.blend(this._blend.texture);
         }
 
+        if (this._modulate) {
+            s.modulate(this._modulate.texture);
+        }
+
+        if (this._kaleid) {
+            s.kaleid(this._kaleid);
+        }
+
+        if (this._noise_mod) {
+            s.modulate(noise(this._noise_mod.scale, this._noise_mod.offset));
+        }
+
+        if (this._colorama) {
+            s.colorama(this._colorama);
+        }
+
         s.out();
 
         const background = solid(
@@ -138,7 +160,23 @@ class Shape {
             () => this._background["b"]
         ).add(s).out();
 
-        this._raw = background;
+        this._raw = s;
+    }
+
+    kaleid(k) {
+        this._kaleid = k;
+        this._exec();
+
+        // for chaining
+        return this;
+    }
+
+    modulate_noise(scale = 10.0, offset = 0.1) {
+        this._noise_mod = { scale, offset };
+        this._exec();
+
+        // for chaining
+        return this;
     }
 
     red(n) {
@@ -207,6 +245,14 @@ class Shape {
 
     blend_generator(generator) {
         this._blend = { texture: generator._get_raw() };
+        this._exec();
+
+        // for chaining
+        return this;
+    }
+
+    modulate_generator(generator) {
+        this._modulate = { texture: generator._get_raw() };
         this._exec();
 
         // for chaining

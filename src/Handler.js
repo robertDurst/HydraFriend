@@ -105,7 +105,7 @@ class Handler {
     }
 
     // cycle between different values
-    cycle(cycle, step) {
+    cycle(cycle, step, start) {
         // check that cycle is an array, if not then return because this won't
         // work
         if (!Array.isArray(cycle) || cycle.length != 2) {
@@ -118,6 +118,9 @@ class Handler {
 
         // the step may be in the wrong direction, but that is a user error
         this._cycle_step = step;
+
+        // originally started at zero which made no sense
+        this._current_cycle = start;
 
         // while this is a conition, it is only a condition so that it will
         // step through on every execution, thus always returning true
@@ -169,6 +172,10 @@ class Handler {
 
     current_random_value() {
         return this._random_value;
+    }
+
+    time_sine() {
+        return ({ time }) => Math.sin(time)
     }
 
     // method called externally to execute underlying method

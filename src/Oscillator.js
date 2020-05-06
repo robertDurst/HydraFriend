@@ -22,6 +22,9 @@ class Oscillator {
         // the underlying generator
         this._raw;
 
+        // -1 means "off"
+        this._invert = 0;
+
         this._exec();
 
         // for chaining
@@ -104,6 +107,14 @@ class Oscillator {
         return this;
     }
 
+    kaleid(k) {
+        this._kaleid = k;
+        this._exec();
+
+        // for chaining
+        return this;
+    }
+
     rotate(rotate) {
         // hiding this mod 360 is not great, but limits weird over rotations
         const modded_rotate = rotate % 360;
@@ -112,6 +123,44 @@ class Oscillator {
 
         // for chaining
         return this;
+    }
+
+    modulate_generator(generator) {
+        this._modulate = { texture: generator._get_raw() };
+        this._exec();
+
+        // for chaining
+        return this;
+    }
+
+    modulate_noise(scale = 10.0, offset = 0.1) {
+        this._noise_mod = { scale, offset };
+        this._exec();
+
+        // for chaining
+        return this;
+    }
+
+    colorama(sequence) {
+        this._colorama = sequence
+        this._exec();
+
+        // for chaining
+        return this;
+    }
+
+    invert() {
+        switch (this._invert) {
+            case -1:
+                this._invert = 1;
+                break;
+            default:
+                this._invert = -1;
+                break;
+        }
+
+        // for chaining
+        return this
     }
 
     _exec() {
@@ -125,6 +174,7 @@ class Oscillator {
                 () => this._rgb["b"])
             .rotate(() => this._rotate)
             .scale(() => this._scale)
+            .invert(() => this._invert)
 
         if (this._mult) {
             o.mult(this._mult.texture);
@@ -132,6 +182,22 @@ class Oscillator {
 
         if (this._blend) {
             o.blend(this._blend.texture);
+        }
+
+        if (this._modulate) {
+            o.modulate(this._modulate.texture);
+        }
+
+        if (this._noise_mod) {
+            o.modulate(noise(this._noise_mod.scale, this._noise_mod.offset));
+        }
+
+        if (this._kaleid) {
+            o.kaleid(this._kaleid);
+        }
+
+        if (this._colorama) {
+            o.colorama(this._colorama);
         }
 
         o.out();
